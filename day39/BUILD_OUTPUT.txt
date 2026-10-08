@@ -1,0 +1,19 @@
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/dishes
+├ ƒ /api/dishes/[id]
+├ ƒ /api/orders
+├ ○ /cart
+├ ƒ /checkout
+├ ƒ /menu
+├ /menu/[id]
+│ ├ ● /menu/doro-wat
+│ ├ ● /menu/siga-wat
+│ ├ ● /menu/beg-alicha-wat
+│ └ ● [+17 more paths]
+└ ƒ /orders
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
