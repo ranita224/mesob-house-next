@@ -22,18 +22,26 @@
 | `/api/orders`, `/api/orders/[id]` | Dynamic | Route handlers that check the session |
 | `/api/me` | Dynamic | Reads the session cookie; the header asks it who is signed in |
 
-## State Management (`app/providers.jsx`)
-* **Cart State**: Managed via React Context providing dual safe accessors (`cart` and `items`) and dynamic item counting for the header badge.
-* **Orders State**: Global state array storing newly submitted orders (`addOrder`, `cancelOrder`), ensuring that multiple placed orders accumulate correctly and persist across page views.
+## State and orders
 
-## Checkout & Order Lifecycle
-1. **Guardrails**: `CheckoutForm` and `CartLines` prevent empty order submissions by validating cart contents before allowing checkout, providing direct navigation back to `/menu` if empty.
-2. **Order Placement**: Placing an order converts active cart items into a newly created order object, clears the active shopping cart, and redirects the user straight to `/orders`.
-3. **Order Management & Cancellation**: Users can track active orders, inspect statuses (`Preparing`, `Delivered`, `Cancelled`), and cancel pending orders directly from the `/orders` view, immediately removing them from active state.
+| What | Where it lives | Why |
+|---|---|---|
+| Cart | The browser (`app/providers.jsx`, saved in `localStorage` as `mesob_cart`) | It is only the person's choices. The server never trusts it: `placeOrder` rebuilds every line from the dish id and takes the price from `menu.json`. |
+| Orders | The server (`lib/db.js`), created by `placeOrder` | They belong to an account, so the server scopes them to the session |
+| Session | A signed `httpOnly` cookie named `session` | The browser cannot read or change it |
 
-## Session & Authentication Strategy
-* **Server-Side Verification**: Authentication is maintained using an `httpOnly`, `sameSite: "lax"` cookie named `session`.
-* **Server Actions for Sign-Out**: The sign-out workflow utilizes a Next.js Server Action (`destroySession` in `lib/session.js`) triggered directly from form submissions in the navigation header, securely clearing the session cookie and refreshing the UI state back to the unauthenticated view without requiring custom client-side API routes.
+## Checkout and order lifecycle
+
+1. `CartLines` and `CheckoutForm` stop an empty cart from being submitted and link back to `/menu`.
+2. `placeOrder` runs on the server. It checks the session, rebuilds each line from the dish id, validates the form with the shared schema, and stores the order with the owner taken from the session.
+3. On success the cart is cleared and the receipt links to `/orders/[id]`.
+4. `/orders` lists only the signed-in person's active orders. `cancelOrder` re-checks the session and the owner, marks the order `CANCELLED`, and the list hides it. `/kitchen` still shows it, so staff do not cook a cancelled order.
+
+Order statuses in the code are `PENDING` and `CANCELLED`.
+
+## Session and authentication
+
+The session is a signed token in an `httpOnly`, `sameSite: "lax"` cookie (`secure` in production). `signIn` and `signOut` are server actions in `app/signin/actions.js`. `signOut` calls the `destroySession()` helper in `lib/session.js`, which deletes the cookie on the server. Full detail is in `AUTH.md`.
 
 ## Routes I changed my mind about
 

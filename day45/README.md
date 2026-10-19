@@ -101,8 +101,8 @@ Every error uses one shape: `{ "error": "...", "fieldErrors": { ... } }`.
 
 | Action | Where | Checks inside the action |
 |---|---|---|
-| `signIn` | `app/signin/actions.js` | Phone and bcrypt hash; `next` must stay on this site |
-| `destroySession` | `lib/session.js` | Clears `httpOnly` session cookie on the server |
+| `signIn`, `signOut` | `app/signin/actions.js` | Phone and bcrypt hash; `next` must stay on this site; sign-out deletes the cookie via `destroySession()` in `lib/session.js` |
+| `signInAsDemo` | `app/signin/actions.js` | Only works when `DEMO_LOGIN` is `"true"`; refuses otherwise |
 | `register` | `app/register/actions.js` | Name, phone and password validated; role is always customer |
 | `placeOrder` | `app/actions.js` | Session; owner is taken from the session, never from the form |
 | `cancelOrder` | `app/actions.js` | Session, order exists, order.userId equals the session user |

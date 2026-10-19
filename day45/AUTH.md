@@ -8,7 +8,7 @@ Demo accounts (password `password123`):
 - `0911111111` customer (Abebe)
 - `0922222222` customer (Someone Else, owns seed order `ord_seed_1`)
 - `0933333333` staff
-
+- `0944444444` customer (Raniya), reachable with the "Continue as Raniya" button only when `DEMO_LOGIN=true`
 ---
 
 ## Protected Routes and Actions
@@ -35,9 +35,11 @@ cookie is missing, forged or expired.
 
 ## Sign-Out Flow
 
-* The sign-out mechanism is executed via a Next.js Server Action (`destroySession`) located in `lib/session.js`.
-* Form submission in `components/Header.js` invokes `destroySession()` directly on the server.
-* Calling `destroySession()` deletes the `httpOnly` `session` cookie and triggers an immediate UI state refresh back to the unauthenticated state ("Sign In") without requiring custom API routes or client-side JavaScript cookie deletion.
+`signOut` in `app/signin/actions.js` is a server action. It calls `destroySession()`
+from `lib/session.js`, which deletes the httpOnly `session` cookie on the server, then
+redirects to `/`. The Sign out button lives in `components/AuthNav.jsx`. AuthNav asks
+`/api/me` who is signed in, so the header stays out of the server render and public pages
+stay static. The button is interface only: the cookie is deleted on the server.
 
 ---
 

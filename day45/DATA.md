@@ -52,7 +52,7 @@ to poll) and `dedupingInterval` (how long to share a request). TanStack Query's
 |---|---|
 | Menu on arrival, dish detail, landing page | Server components |
 | Order page first render | Server component that passes the order in as `fallbackData` |
-| Placing and cancelling an order | Server actions & global context state management |
+| Placing and cancelling an order | Server actions (`app/actions.js`) |
 
 ## Endpoints used by the client
 

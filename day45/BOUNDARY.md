@@ -4,7 +4,7 @@
 
 | File | Why it must be client |
 |---|---|
-| `app/providers.jsx` | Cart context holds cart state and global active orders state |
+| `app/providers.jsx` | Cart context holds the cart (saved in localStorage). Orders live on the server.|
 | `app/menu/FilterShell.jsx` | Holds the selected category |
 | `app/menu/AddToCartButton.jsx` | onClick writes to the cart |
 | `app/menu/SearchBox.jsx` | Typing state, debounce and a SWR query |
@@ -19,7 +19,7 @@
 | `app/register/RegisterForm.jsx` | useActionState for the pending flag and the field errors |
 | `app/menu/error.js` | Error boundaries must be client components |
 
-Days 42 and 43 updated interactive UI logic, robust multi-order global context tracking, and cleaner component boundaries. Day 44 added no client components: metadata, JSON-LD, preview images, the sitemap and robots rules all run on the server. Day 45 added none either: `proxy.js` runs on the server before a page is rendered, and the home page change (a `priority` image) stays in a server component.
+Days 42 and 43 added the sign-in and register forms, AuthNav, and the cart. Day 44 added no client components. Day 45 added none either.
 
 ## Server components
 
@@ -42,7 +42,7 @@ Days 42 and 43 updated interactive UI logic, robust multi-order global context t
 | `app/signin/page.js` | Reads next from the URL and renders the form |
 | `app/register/page.js` | Reads next from the URL and renders the form |
 | `app/checkout/page.js` | Checks the session, then renders |
-| `app/orders/page.js` | Renders active orders state and cancellation management |
+| `app/orders/page.js` | Checks the session and lists only the signed-in person's active orders |
 | `app/orders/[id]/page.js` | Checks session and ownership, then hands the order to OrderStatus |
 | `app/kitchen/page.js` | Checks session and role on the server |
 
@@ -79,10 +79,10 @@ interface: the checks that matter run on the server.
 | Menu search | Client SWR query to `GET /api/dishes?q=` |
 | Pages two onward | Client SWR query to `GET /api/dishes?page=` |
 | Who is signed in (header) | Client SWR query to `GET /api/me` |
-| Placing and cancelling an order | Server actions & client global context state |
-| Signing in and out | Server action (`destroySession`) |
+|Placing and cancelling an order | Server actions (`app/actions.js`)|
+|Signing in and out | Server actions (`signIn, signOut in app/signin/actions.js`)|
 | `POST /api/orders` | Route handler for outside callers |
-| Cart & active orders history | Client store (`app/providers.jsx`) |
+Cart | Client store (`app/providers.jsx`)
 
 ## First Load JS for /menu
 
