@@ -5,7 +5,8 @@ strategy per route, server and client components, route handlers, server actions
 client-side data fetching with SWR, real authentication with a staff-only route, a measured
 optimisation pass, and search metadata, previews, structured data, a sitemap and robots rules.
 
-**Deployed URL:** (paste the live address here)
+**Deployed URL:** (https://mesob-house-next.vercel.app/
+)
 
 ## Run from a fresh clone
 
