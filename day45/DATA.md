@@ -75,4 +75,4 @@ is what justifies keeping it.
 | Polling | Leave the order page open | A `/api/orders/[id]` request about every 5 seconds |
 | Polling stops | Cancel the order | The requests stop once the status is CANCELLED |
 
-Result of the last run: (date, what was seen).
+Result of the last run: 10/19/2026.
