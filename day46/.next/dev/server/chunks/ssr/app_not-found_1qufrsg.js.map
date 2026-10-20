@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/HP/OneDrive/Desktop/IBT/mesob-house-next/day46/app/not-found.js"],"sourcesContent":["import Link from \"next/link\";\r\n\r\nexport default function NotFound() {\r\n  return (\r\n    <main className=\"p-8\">\r\n      <h1 className=\"text-2xl font-bold\">Page not found</h1>\r\n      <p className=\"mt-2\">We couldn't find what you were looking for.</p>\r\n      <Link href=\"/\" className=\"underline block mt-4\">Back to home</Link>\r\n    </main>\r\n  );\r\n}"],"names":["NotFound","className","href"],"mappings":";;;;;AAAA;;;AAEe,SAASA;IACtB,qBACE,8OAAC;QAAKC,WAAU;;0BACd,8OAAC;gBAAGA,WAAU;0BAAqB;;;;;;0BACnC,8OAAC;gBAAEA,WAAU;0BAAO;;;;;;0BACpB,8OAAC,0LAAI;gBAACC,MAAK;gBAAID,WAAU;0BAAuB;;;;;;;;;;;;AAGtD"}}]
-}
