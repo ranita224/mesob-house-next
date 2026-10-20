@@ -38,7 +38,7 @@ Set these in the host's environment settings (not in the repository):
 | Variable | Value |
 |---|---|
 | `SESSION_SECRET` | A long random string |
-| `SITE_URL` | The deployed address, for example `https://mesob-eats.vercel.app` |
+| `SITE_URL` | https://mesob-house-next.vercel.app/ |
 | `DEMO_LOGIN` | Leave unset |
 
 If `SITE_URL` is missing, social previews, canonical links and the sitemap point at
