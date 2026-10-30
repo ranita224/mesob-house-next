@@ -6,6 +6,8 @@ import useSWR from "swr";
 import { fetcher } from "../lib/fetcher";
 import { signOut } from "../app/signin/actions";
 
+const link = "inline-flex min-h-11 items-center hover:text-maroon";
+
 export default function AuthNav() {
   const pathname = usePathname();
   const { data, mutate } = useSWR(
@@ -16,13 +18,10 @@ export default function AuthNav() {
   const user = data?.user ?? null;
 
   return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-      {user && (
-        <Link href="/orders" className="hover:text-maroon">Orders</Link>
-      )}
-      {user?.role === "staff" && (
-        <Link href="/kitchen" className="hover:text-maroon">Kitchen</Link>
-      )}
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+      {user && <Link href="/orders" className={link}>Orders</Link>}
+      {user && <Link href="/dashboard" className={link}>Dashboard</Link>}
+      {user?.role === "staff" && <Link href="/kitchen" className={link}>Kitchen</Link>}
 
       {user ? (
         <form
@@ -35,7 +34,7 @@ export default function AuthNav() {
           </span>
           <button
             type="submit"
-            className="rounded-full border border-paprika px-4 py-2 text-sm font-semibold text-paprika hover:bg-paprika hover:text-white"
+            className="min-h-11 rounded-full border border-paprika px-4 text-sm font-semibold text-paprika hover:bg-paprika hover:text-white"
           >
             Sign out
           </button>
@@ -43,7 +42,7 @@ export default function AuthNav() {
       ) : (
         <Link
           href="/signin"
-          className="rounded-full bg-paprika px-5 py-2 text-sm font-semibold text-white hover:bg-maroon"
+          className="inline-flex min-h-11 items-center rounded-full bg-paprika px-5 text-sm font-semibold text-white hover:bg-maroon"
         >
           Sign in
         </Link>

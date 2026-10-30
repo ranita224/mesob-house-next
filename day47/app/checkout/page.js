@@ -12,6 +12,8 @@ export default async function CheckoutPage() {
   const user = await getSession();
   if (!user) redirect("/signin?next=/checkout");
 
+  const orderKey = crypto.randomUUID();
+
   return (
     <main className="mx-auto max-w-5xl p-6">
       <h1 className="text-3xl font-bold">Checkout</h1>
@@ -22,7 +24,7 @@ export default async function CheckoutPage() {
         </section>
 
         <section className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-          <CheckoutForm defaultName={user.name} />
+          <CheckoutForm defaultName={user.name} orderKey={orderKey} />
         </section>
       </div>
     </main>

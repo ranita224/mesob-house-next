@@ -13,7 +13,7 @@ export default function ExportButton({ rows }) {
       type="button"
       onClick={handleClick}
       disabled={rows.length === 0}
-      className="rounded-full border border-paprika px-4 py-2 text-sm font-semibold text-paprika hover:bg-paprika hover:text-white disabled:opacity-50"
+      className="rounded-full border border-paprika min-h-11 px-4 text-sm font-semibold text-paprika hover:bg-paprika hover:text-white disabled:opacity-50"
     >
       Export CSV ({rows.length} orders)
     </button>

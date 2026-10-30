@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { signIn, signInAsDemo } from "./actions";
 
 const input =
-  "w-full rounded-lg border border-gray-300 p-3 focus:border-paprika focus:outline-none";
+  "w-full rounded-lg border border-gray-300 p-3 focus:border-paprika";
 
 export default function SignInForm({ next, demo = false }) {
   const [state, formAction, pending] = useActionState(signIn, null);

@@ -37,9 +37,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${playfair.variable} ${jakarta.variable}`}>
       <body className="font-sans bg-amber-50/30 text-gray-900 antialiased min-h-screen flex flex-col">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:font-semibold focus:text-maroon focus:shadow-lg"
+        >
+          Skip to content
+        </a>
         <Providers>
           <Header />
-          <div className="flex-grow">{children}</div>
+          <div id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

@@ -12,12 +12,13 @@ export default function CancelButton({ orderId }) {
       <button
         type="submit"
         disabled={pending}
-        className="border rounded px-2 py-0.5 text-sm"
+        aria-label={`Cancel order ${orderId}`}
+        className="min-h-11 min-w-11 rounded border px-3 text-sm font-semibold disabled:opacity-50"
       >
         {pending ? "Cancelling…" : "Cancel"}
       </button>
       {state?.error && (
-        <span role="alert" className="text-red-600 text-sm">
+        <span role="alert" className="text-sm text-red-600">
           {state.error}
         </span>
       )}

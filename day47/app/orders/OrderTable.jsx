@@ -11,7 +11,6 @@ const COLUMNS = [
   { key: "total", label: "Total", numeric: true },
 ];
 
-// Server component: real table markup, sort driven by the URL.
 export default function OrderTable({ orders, sort, dir }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-gray-100 bg-white" role="region" aria-label="Your orders (scrolls sideways on small screens)" tabIndex={0}>
@@ -31,7 +30,7 @@ export default function OrderTable({ orders, sort, dir }) {
                   aria-sort={active ? (dir === "asc" ? "ascending" : "descending") : "none"}
                   className={`px-4 py-3 ${c.numeric ? "text-right" : "text-left"}`}
                 >
-                  <Link href={`/orders?sort=${c.key}&dir=${nextDir}`} className="underline">
+                  <Link href={`/orders?sort=${c.key}&dir=${nextDir}`} className="inline-flex min-h-11 items-center underline">
                     {c.label}{active ? (dir === "asc" ? " ▲" : " ▼") : ""}
                   </Link>
                 </th>
@@ -44,7 +43,9 @@ export default function OrderTable({ orders, sort, dir }) {
           {orders.map((o) => (
             <tr key={o.id} className="border-b border-gray-100">
               <td className="px-4 py-3">
-                <Link href={`/orders/${o.id}`} className="font-semibold underline">{o.id}</Link>
+                <Link href={`/orders/${o.id}`} className="inline-flex min-h-11 items-center font-semibold underline">
+                  {o.id}
+                </Link>
               </td>
               <td className="px-4 py-3">
                 <time dateTime={o.createdAt}>{when.format(new Date(o.createdAt))}</time>
@@ -56,7 +57,9 @@ export default function OrderTable({ orders, sort, dir }) {
               </td>
               <td className="px-4 py-3">
                 <div className="flex flex-wrap items-center gap-3">
-                  <Link href={`/track/${o.id}`} className="font-semibold text-paprika underline">Track</Link>
+                  <Link href={`/track/${o.id}`} className="inline-flex min-h-11 min-w-11 items-center font-semibold text-paprika underline">
+                    Track
+                  </Link>
                   {canCancel(o) && <CancelButton orderId={o.id} />}
                 </div>
               </td>

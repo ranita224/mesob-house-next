@@ -3,6 +3,7 @@ import { getSession } from "../../../../../lib/session";
 import { getTracking, isTerminal } from "../../../../../lib/tracking";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; 
 
 const INTERVAL_MS = 2000;
 

@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { orderSchema } from "../lib/schema";
-import { createOrder, getOrder, markCancelled } from "../lib/db";
+import { createOrderOnce, getOrder, markCancelled } from "../lib/db";
 import { getSession } from "../lib/session";
 import { canCancel } from "../lib/tracking";
 import { dishes } from "./menu/dishes";
@@ -26,6 +26,7 @@ export async function placeOrder(prevState, formData) {
     address: formData.get("address") ?? "",
     notes: formData.get("notes") ?? "",
   };
+  const orderKey = String(formData.get("orderKey") ?? "").slice(0, 100);
 
   let requested = [];
   try {
@@ -65,7 +66,7 @@ export async function placeOrder(prevState, formData) {
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const order = await createOrder(
+  const order = await createOrderOnce(
     {
       name: parsed.data.name,
       phone: parsed.data.phone,
@@ -74,7 +75,8 @@ export async function placeOrder(prevState, formData) {
       items,
       total,
     },
-    user.id
+    user.id,
+    orderKey
   );
 
   revalidatePath("/orders");
@@ -94,7 +96,6 @@ export async function cancelOrder(prevState, formData) {
 
   if (order.status === "CANCELLED") return { error: "Already cancelled" };
 
-  // Day 47: enforce on the server too. Hiding the button is not a permission check.
   if (!canCancel(order)) return { error: "Too late to cancel: the courier has already left" };
 
   await markCancelled(orderId);

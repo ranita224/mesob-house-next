@@ -122,3 +122,11 @@ export async function markCancelled(id) {
   order.updatedAt = new Date().toISOString();
   return order;
 }
+
+export async function createOrderOnce(data, userId, key) {
+  if (key) {
+    const existing = mockOrders.find((o) => o.userId === userId && o.idempotencyKey === key);
+    if (existing) return existing;
+  }
+  return createOrder({ ...data, idempotencyKey: key || undefined }, userId);
+}
