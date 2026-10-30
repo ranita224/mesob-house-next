@@ -104,7 +104,7 @@ export async function createOrder(data, userId) {
 }
 
 export async function getOrder(id) {
-  return mockOrders.find((o) => o.id === id) || null;
+  return mockOrders.find((o) => o.id === id)
 }
 
 export async function getOrdersFor(userId) {
