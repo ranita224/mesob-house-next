@@ -1,4 +1,4 @@
-import { getOrder } from "../../../../lib/db";
+import { getOrderById } from "../../../../lib/orderData";
 import { getSession } from "../../../../lib/session";
 import { getStage } from "../../../../lib/tracking";
 
@@ -9,7 +9,7 @@ export async function GET(request, { params }) {
   }
 
   const { id } = await params;
-  const order = await getOrder(id);
+  const order = await getOrderById(user, id);
 
   if (!order) {
     return Response.json({ error: "No such order" }, { status: 404 });

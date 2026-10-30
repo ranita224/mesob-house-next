@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getOrder } from "../../../lib/db";
+import { getOrderById } from "../../../lib/orderData";
 import { getSession } from "../../../lib/session";
 import { getStage } from "../../../lib/tracking";
 import { etb, when } from "../../../lib/format";
@@ -17,7 +17,7 @@ export default async function OrderPage({ params }) {
   const { id } = await params;
 
   const user = await getSession();
-  const order = await getOrder(id);
+  const order = await getOrderById(user, id);
 
   if (!user || !order || order.userId !== user.id) notFound();
 

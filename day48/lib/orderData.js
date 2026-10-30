@@ -92,3 +92,11 @@ export async function getDashboard(user, { demo, days = 14 } = {}) {
     range: `${shortDay.format(new Date(keys[0]))} – ${shortDay.format(new Date(keys[keys.length - 1]))} ${yearOf.format(new Date(now))}`,
   };
 }
+
+export async function getOrderById(user, id) {
+  const orders = await loadOrders(user);
+
+  return (
+    orders.find((o) => o.id === id) || null
+  );
+}
